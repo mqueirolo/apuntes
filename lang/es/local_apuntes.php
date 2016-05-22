@@ -14,4 +14,3 @@ $string["title"] = "Apuntes UAI";
 $string["heading"] = "Apuntes UAI";
 
 
-?>

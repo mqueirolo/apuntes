@@ -11,4 +11,4 @@ local/apuntes.php
 */
 
 $string["title"] = "Class Notes UAI";
-$string["receipts_heading"] = "Class Notes";
+$string["heading"] = "Class Notes UAI";

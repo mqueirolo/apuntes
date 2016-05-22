@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
  *
-* @package    local
-* @subpackage apuntes
-* @copyright  2016  Matías Queirolo (mqueirolo@alumnos.uai.cl)
-* @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-*/
+ * @package    local
+ * @subpackage apuntes
+ * @copyright  2016  Matías Queirolo (mqueirolo@alumnos.uai.cl)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 require_once (dirname(dirname(dirname(__FILE__)))."/config.php");
 require_once ($CFG->dirroot."/local/apuntes/forms.php");
@@ -88,7 +88,7 @@ if($action == "edit"){
 			else if($editform->get_data()){
 				
 				$record = new stdClass();
-				$record->id = idapunte;
+				$record->id = $idapunte;
 				$record->user_id = $USER->id;
 				$record->course_id = $editform->get_data()->course_id;
 				$record->fecha = time();
