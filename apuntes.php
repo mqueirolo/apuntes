@@ -94,7 +94,7 @@ if ($action == "view"){
 		}
 	}
 
-	//$buttonurl = new moodle_url("/local/apuntes/apuntes.php", array("action" => "add"));
+	$buttonurl = new moodle_url("/local/apuntes/misapuntes.php", array("action" => "add"));
 	$toprow = array();
 	$toprow[] = new tabobject(
 			"Buscar Apuntes",
@@ -116,14 +116,14 @@ if ($action == "add"){
 */
 // Displays all the records, tabs, and options
 if ($action == "view"){
-	echo $OUTPUT->tabtree($toprow, "Apuntes");
+	echo $OUTPUT->tabtree($toprow, "Buscar Apuntes");
 	if (count($apuntes) == 0){
 		echo html_writer::nonempty_tag("h4", "No existen apuntes", array("align" => "center"));
 	}else{
 		echo html_writer::table($apuntestable);
 	}
 
-	//echo html_writer::nonempty_tag("div", $OUTPUT->single_button($buttonurl, "Agregar Apunte"), array("align" => "center"));
+	echo html_writer::nonempty_tag("div", $OUTPUT->single_button($buttonurl, "Agregar Apunte"), array("align" => "center"));
 	
 }
 

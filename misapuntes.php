@@ -204,7 +204,7 @@ if( $action == "edit" ){
 // Displays all the records, tabs, and options
 if ($action == "view"){
 	
-	echo $OUTPUT->tabtree($toprow, "Apuntes");
+	echo $OUTPUT->tabtree($toprow, "Mis Apuntes");
 	if (count($apuntes) == 0){
 		echo html_writer::nonempty_tag("h4", "No existen apuntes", array("align" => "center"));
 	}else{
