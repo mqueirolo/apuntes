@@ -22,7 +22,7 @@
  */
 
 
-//cambiar idattendance por idalumno
+//cambiar idattendance por idalumno, hacer lo mismo con apuntes.php
 require_once (dirname(dirname(dirname(__FILE__)))."/config.php");
 require_once ($CFG->dirroot."/local/apuntes/forms.php");
 
