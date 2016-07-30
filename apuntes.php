@@ -34,7 +34,7 @@ $PAGE->set_pagelayout("standard");
 
 // Possible actions -> view, add. Standard is view mode
 $action = optional_param("action", "view", PARAM_TEXT);
-$idapunte = optional_param("idapunte", null, PARAM_INT);
+$idattendance = optional_param("idapunte", null, PARAM_INT);
 
 require_login();
 if (isguestuser()){
@@ -72,24 +72,24 @@ if ($action == "view"){
 			WHERE u.id = r.user_id AND r.course_id = c.id
 			GROUP BY r.id";
 		
-	$apuntes = $DB->get_records_sql($sql, array(1));
-	$apuntestable = new html_table();
+	$attendances = $DB->get_records_sql($sql, array(1));
+	$attendancestable = new html_table();
 
-	if (count($apuntes) > 0){
-		$apuntestable->head = array(
+	if (count($attendances) > 0){
+		$attendancestable->head = array(
 				"Apuntes",
 				"Autor",
 				"Curso",
 				"Fecha"
 		);
 
-		foreach ($apuntes as $apunte){
+		foreach ($attendances as $attendance){
 				
-			$apuntestable->data[] = array(
-					$apunte->nombre,
-					$apunte->autor,
-					$apunte->fullname,
-					date("d-m-Y", $apunte->fecha)
+			$attendancestable->data[] = array(
+					$attendance->nombre,
+					$attendance->autor,
+					$attendance->fullname,
+					date("d-m-Y", $attendance->fecha)
 			);
 		}
 	}
@@ -117,10 +117,10 @@ if ($action == "add"){
 // Displays all the records, tabs, and options
 if ($action == "view"){
 	echo $OUTPUT->tabtree($toprow, "Buscar Apuntes");
-	if (count($apuntes) == 0){
+	if (count($attendances) == 0){
 		echo html_writer::nonempty_tag("h4", "No existen apuntes", array("align" => "center"));
 	}else{
-		echo html_writer::table($apuntestable);
+		echo html_writer::table($attendancestable);
 	}
 
 	echo html_writer::nonempty_tag("div", $OUTPUT->single_button($buttonurl, "Agregar Apunte"), array("align" => "center"));

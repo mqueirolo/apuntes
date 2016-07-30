@@ -40,13 +40,13 @@ class addapuntes extends moodleform {
 		$courses = $DB->get_records_sql($sql, array(1));
 
 		// Select user input
-		$coursenames = array();
+		$status = array();
 		foreach($courses as $course){
 			$id = $course->id;
 			$name = $course->fullname;
-			$coursenames[$course->id] = $name;
+			$status[$course->id] = $name;
 		}
-		$mform->addElement("select", "course_id", "Seleccione curso", $coursenames);
+		$mform->addElement("select", "course_id", "Seleccione curso", $status);
 
 		// Name input
 		$mform->addElement ("text", "name", "Ingrese nombre del apunte");
@@ -91,7 +91,7 @@ class editapuntes extends moodleform {
 		global $DB, $CFG;
 		$mform = $this->_form;
 		$instance = $this->_customdata;
-		$idapunte = $instance["idapunte"];
+		$idattendance = $instance["idapunte"];
 
 		// Query for retrieving courses records
 		$sql = "SELECT id, fullname
@@ -102,16 +102,16 @@ class editapuntes extends moodleform {
 		$courses = $DB->get_records_sql($sql, array(1));
 		
 		// Retrieves the previous information registered
-		$apuntedata = $DB->get_record("relacion", array("id" => $idapunte));
+		$attendancedata = $DB->get_record("relacion", array("id" => $idattendance));
 
 		// Select user input
-		$coursenames = array();
+		$status = array();
 		foreach($courses as $course){
 			$id = $course->id;
 			$name = $course->fullname;
-			$coursenames[$course->id] = $name;
+			$status[$course->id] = $name;
 		}
-		$mform->addElement("select", "course_id", "Seleccione curso", $coursenames);
+		$mform->addElement("select", "course_id", "Seleccione curso", $status);
 
 		// Name input
 		$mform->addElement ("text", "name", "Ingrese nombre del apunte");
@@ -120,7 +120,7 @@ class editapuntes extends moodleform {
 		// Set action to "edit"
 		$mform->addElement("hidden", "action", "edit");
 		$mform->setType("action", PARAM_TEXT);
-		$mform->addElement("hidden", "idapunte", $idapunte);
+		$mform->addElement("hidden", "idapunte", $idattendance);
 		$mform->setType("idapunte", PARAM_INT);
 
 		$this->add_action_buttons(true);

@@ -34,7 +34,7 @@ $PAGE->set_pagelayout("standard");
 
 // Possible actions -> view, add, edit or delete. Standard is view mode
 $action = optional_param("action", "view", PARAM_TEXT);
-$idapunte = optional_param("idapunte", null, PARAM_INT);
+$idattendance = optional_param("idapunte", null, PARAM_INT);
 
 require_login();
 if (isguestuser()){
@@ -66,19 +66,19 @@ if ($action == "add"){
 
 // Edits an existent record
 if($action == "edit"){
-	if($idapunte == null){
+	if($idattendance == null){
 		print_error("Apunte no seleccionado");
 		$action = "view";
 	}
 	else{
-		if($apunte = $DB->get_record("relacion", array("id" => $idapunte))){
+		if($attendance = $DB->get_record("relacion", array("id" => $idattendance))){
 			$editform = new editapuntes(null, array(
-					"idapunte" => $idapunte
+					"idapunte" => $idattendance
 			));
 				
 			$defaultdata = new stdClass();
-			$defaultdata->course_id = $apunte->course_id;
-			$defaultdata->name = $apunte->nombre;
+			$defaultdata->course_id = $attendance->course_id;
+			$defaultdata->name = $attendance->nombre;
 			$editform->set_data($defaultdata);
 				
 			if($editform->is_cancelled()){
@@ -88,7 +88,7 @@ if($action == "edit"){
 			else if($editform->get_data()){
 				
 				$record = new stdClass();
-				$record->id = $idapunte;
+				$record->id = $idattendance;
 				$record->user_id = $USER->id;
 				$record->course_id = $editform->get_data()->course_id;
 				$record->fecha = time();
@@ -106,12 +106,12 @@ if($action == "edit"){
 
 // Delete the selected record
 if ($action == "delete"){
-	if ($idapunte == null){
+	if ($idattendance == null){
 		print_error("Apunte no seleccionado");
 		$action = "view";
 	}else{
-		if ($apunte = $DB->get_record("relacion", array("id" => $idapunte))){
-			$DB->delete_records("relacion", array("id" => $apunte->id));
+		if ($attendance = $DB->get_record("relacion", array("id" => $idattendance))){
+			$DB->delete_records("relacion", array("id" => $attendance->id));
 			$action = "view";
 		}else{
 			print_error("Apunte no existe");
@@ -129,11 +129,11 @@ if ($action == "view"){
 			HAVING r.user_id = $USER->id"; 
 			
 
-	$apuntes = $DB->get_records_sql($sql, array(1));
-	$apuntestable = new html_table();
+	$attendances = $DB->get_records_sql($sql, array(1));
+	$attendancestable = new html_table();
 
-	if (count($apuntes) > 0){
-		$apuntestable->head = array(
+	if (count($attendances) > 0){
+		$attendancestable->head = array(
 				"Mis Apuntes",
 				"Autor",
 				"Curso",
@@ -141,11 +141,11 @@ if ($action == "view"){
 				"Ajustes"
 		);
 
-		foreach ($apuntes as $apunte){
+		foreach ($attendances as $attendance){
 			// Define delete icon and url
 			$deleteurl_apunte = new moodle_url("/local/apuntes/misapuntes.php", array(
 					"action" => "delete",
-					"idapunte" => $apunte->id,
+					"idapunte" => $attendance->id,
 			));
 			$deleteicon_apunte = new pix_icon("t/delete", "Borrar");
 			$deleteaction_apunte = $OUTPUT->action_icon(
@@ -157,7 +157,7 @@ if ($action == "view"){
 			// Define edition icon and url
 			$editurl_apunte = new moodle_url("/local/apuntes/misapuntes.php", array(
 					"action" => "edit",
-					"idapunte" => $apunte->id
+					"idapunte" => $attendance->id
 			));
 			$editicon_apunte = new pix_icon("i/edit", "Editar");
 			$editaction_apunte = $OUTPUT->action_icon(
@@ -166,11 +166,11 @@ if ($action == "view"){
 					new confirm_action("Confirme")
 					);
 
-			$apuntestable->data[] = array(
-					$apunte->nombre,
-					$apunte->autor,
-					$apunte->fullname,
-					date("d-m-Y", $apunte->fecha),
+			$attendancestable->data[] = array(
+					$attendance->nombre,
+					$attendance->autor,
+					$attendance->fullname,
+					date("d-m-Y", $attendance->fecha),
 					$deleteaction_apunte.$editaction_apunte
 			);
 		}
@@ -205,10 +205,10 @@ if( $action == "edit" ){
 if ($action == "view"){
 	
 	echo $OUTPUT->tabtree($toprow, "Mis Apuntes");
-	if (count($apuntes) == 0){
+	if (count($attendances) == 0){
 		echo html_writer::nonempty_tag("h4", "No existen apuntes", array("align" => "center"));
 	}else{
-		echo html_writer::table($apuntestable);
+		echo html_writer::table($attendancestable);
 	}
 
 	echo html_writer::nonempty_tag("div", $OUTPUT->single_button($buttonurl, "Agregar Apunte"), array("align" => "center"));
